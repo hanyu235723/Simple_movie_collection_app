@@ -24,16 +24,21 @@ def connection():
 def save_to_db(title,director,year):
     conn = sqlite3.connect("movie.db")
     c = conn.cursor()
+    try:
 
-    if title and director and year:
+        if title and director and year:
 
-        title=str(title)
-        director=str(director)
-        year=int(year)
+            title=str(title)
+            director=str(director)
+            year=int(year)
 
-        c.execute("insert into my_movie_table (title,director,year) values(?,?,?)",(title,director,year))
-        conn.commit()
-    c.close()
+            c.execute("insert into my_movie_table (title,director,year) values(?,?,?)",(title,director,year))
+            conn.commit()
+    except ValueError:
+        print ("please input only number for 'year' field")
+
+    finally :
+        c.close()
 
 def delete_movie(id):
     conn = sqlite3.connect("movie.db")
